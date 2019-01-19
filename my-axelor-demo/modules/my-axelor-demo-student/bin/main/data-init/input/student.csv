@@ -1,0 +1,4 @@
+rollNo,name,dateOfBirth,phoneType_Home,phoneType_Office,phoneType_Others,depName,street,area,city,zip,state,countryName,subjects
+1,Mr. Jigar init,17/08/2018,9876543210,1234567890,9687577611,Computer-Science,xyz-street,vesu,SURAT,xyz-zip,GUJARAT,INDIA,Computer-Network(CS)|Java(CS)
+2,Mr. Chirag init,18/08/2018,9876543210,1234567890,9687577611,Civil,xyz-street,piplod,LONDON,xyz-zip,UK-state,UNITED-KINGDOM,Mining Engg(CV)|Construction(CV)
+3,Mr. Jay init,19/08/2018,9876543210,1234567890,9687577611,Chemical,xyz-street,varacha,COLOMBO,xyz-zip,SL-state,SRI-LANKA,Thermodynamics(CH)|Bio-Chemistry(CH)

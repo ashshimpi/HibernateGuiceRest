@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.0.xsd">
+	<selection name="Assignment.state.selection">
+		<option value="todo">To-do</option>
+		<option value="progress">In progress</option>
+		<option value="complete">Completed</option>
+	</selection>
+	<grid model="com.axelor.student.db.Assignment" title="Assignments"
+		name="assignment-grid">
+		<field name="name" />
+		<field name="createDate" />
+		<field name="startDate" />
+		<field name="endDate" />
+		<field name="priority" />
+		<field name="state" />
+		<field name="progress" widget="Progress" />
+	</grid>
+
+	<form name="assignment-form" title="Assignment-treeview"
+		model="com.axelor.student.db.Assignment">
+		<panel title="Overview">
+			<field name="name" />
+			<field name="priority" />
+			<field name="createDate" />
+			<field name="deadlineDate" />
+			<field name="startDate" />
+			<field name="endDate" />
+			<field name="state" />
+			<field name="progress" widget="Progress" />
+		</panel>
+		<panel-tabs>
+			<panel title="Notes">
+				<field name="notes" showTitle="false" colSpan="12" />
+			</panel>
+		</panel-tabs>
+
+	</form>
+	<kanban name="assignment-kanban" title="Assignment(Kanban)"
+		model="com.axelor.student.db.Assignment" columnBy="state" sequenceBy="priority"
+		limit="10">
+		<field name="name" />
+		<field name="notes" />
+		<field name="progress" />
+		<field name="startDate" />
+		<field name="endDate" />
+		<hilite color="danger" if="progress == 0" />
+		<hilite color="success" if="progress == 100" />
+		<hilite color="info" if="progress >= 50" />
+		<hilite color="warning" if="progress > 0" />
+		<template><![CDATA[
+    <h4>{{name}}</h4>
+    <div class="card-body">{{notes}}</div>
+    <div class="card-footer">
+      <i class='fa fa-clock-o'></i> <span>{{startDate|date:'yyyy-MM-dd HH:mm:ss'}}</span>
+    </div>
+    ]]></template>
+	</kanban>
+
+
+  <calendar name="assignment-calendar" title="My Calendar" model="com.axelor.student.db.Assignment"
+    colorBy="name"
+    eventStart="startDate"
+    eventStop="endDate"
+    eventLength="1">
+    <field name="name" />
+  </calendar>
+  
+  
+
+
+	<tree name="assignment-tree" title="Assignments(tree)">
+
+		<!-- define tree columns -->
+		<column name="Name" type="string" />
+		<column name="Progress" type="integer" />
+
+		<!-- define 1st level node -->
+		<node model="com.axelor.student.db.Assignment">
+			<field name="name" as="Name" />
+			<field name="progress" as ="Progress"/>
+		</node>
+
+		<!-- define 2nd level node -->
+<!-- 		<node model="com.axelor.student.db.Assignment" parent="student"> -->
+<!-- 			<field name="name" as="Name" /> -->
+<!-- 			<field name="progress" as="Progress" /> -->
+<!-- 		</node> -->
+
+	</tree>
+
+</object-views>

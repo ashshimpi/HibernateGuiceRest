@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<student-book>
+	<student name="Mr Rahul(demo-xml)" dateOfBirth="01/12/2000" rollNo="4">
+		<Phones>
+			<phone type="Home">9687577611</phone>
+			<phone type="Office">9687577611</phone>
+		</Phones>
+		<subjects>
+			<subject code="CN">Computer-Network(CS)</subject>
+			<subject code="CSS">Data-Compression(CS)</subject>
+		</subjects>
+		<address street="xyz-street" area="Adajan" city="xyz-city"
+			zip="xyz-zip" state="xyz-state">
+			<country>UNITED-KINGDOM</country>
+		</address>
+		<department code="CS">Computer-Science</department>
+	</student>
+	<student name="Mr Pratik(demo-xml)" dateOfBirth="01/12/2000" rollNo="4">
+		<Phones>
+			<phone type="Home">9687577611</phone>
+			<phone type="Office">9687577611</phone>
+		</Phones>
+		<subjects>
+			<subject code="CN">Java(CS)</subject>
+			<subject code="CSS">Data-Compression(CS)</subject>
+		</subjects>
+		<address street="xyz-street" area="Ved" city="xyz-city"
+			zip="xyz-zip" state="xyz-state">
+			<country >SRI-LANKA</country>
+		</address>
+		<department code="CS">Computer-Science</department>
+	</student>
+</student-book>

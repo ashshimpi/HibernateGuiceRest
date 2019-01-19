@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_5.0.xsd">
+
+	<module name="student" package="com.axelor.student.db" />
+
+	<entity name="Student" sequential="true" cachable="true">
+		<string name="name" />
+		<date name="dateOfBirth" />
+		<integer name="rollNo" />
+		<binary name="image" title="Photo" help="Max size 4MB." image="true" />
+		<one-to-many name="phones" ref="Phone" mappedBy="student" />
+		<many-to-many name="subjects" ref="Subject" />
+		<many-to-one name="department" ref="Department" />
+		<one-to-one ref="Address" name="address" />
+	</entity>
+</domain-models>

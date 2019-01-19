@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<csv-inputs xmlns="http://axelor.com/xml/ns/data-import"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://axelor.com/xml/ns/data-import
+  http://axelor.com/xml/ns/data-import/data-import_4.0.xsd">
+
+	<adapter name="LocalDate" type="com.axelor.data.adapter.JavaTimeAdapter">
+		<option name="type" value="LocalDate" />
+		<option name="format" value="dd/MM/yyyy" />
+	</adapter>
+<!-- 	<adapter name="LocalDateTime" type="com.axelor.data.adapter.JavaTimeAdapter"> -->
+<!-- 		<option name="type" value="LocalDateTime" /> -->
+<!-- 		<option name="format" value="yyyy-MM-dd HH:mm:ss" /> -->
+<!-- 	</adapter> -->
+<!-- 	<input file="assignment.csv" type="com.axelor.student.db.Assignment"> -->
+<!-- 		<bind to="name" column="name" /> -->
+<!-- 		<bind to="notes" column="notes"/> -->
+<!-- 		<bind to="state" column="state"/> -->
+<!-- 		<bind to="priority" column="priority"/> -->
+<!-- 		<bind to="createDate" column="createDate" adapter="LocalDateTime" /> -->
+<!-- 		<bind to="startDate" column="startDate" adapter="LocalDateTime" /> -->
+<!-- 		<bind to="endDate" column="endDate" adapter="LocalDateTime" /> -->
+<!-- 		<bind to="deadlineDate" column="deadlineDate" adapter="LocalDate" /> -->
+<!-- 		<bind to="progress" column="progress"/> -->
+<!-- 	</input> -->
+
+	<input file="country.csv" type="com.axelor.student.db.Country">
+		<bind to="code" column="code" />
+		<bind to="name" column="name" />
+	</input>
+	<input file="department.csv" type="com.axelor.student.db.Department">
+		<bind to="code" column="code" />
+		<bind to="name" column="name" />
+	</input>
+
+	<input file="subject.csv" type="com.axelor.student.db.Subject">
+		<bind to="code" column="code" />
+		<bind to="subjectName" column="subjectName" />
+	</input>
+
+	<input file="student.csv" type="com.axelor.student.db.Student"
+		call="com.axelor.student.web.StudentController:validateImport">
+		<bind to="rollNo" column="rollNo" />
+		<bind to="name" column="name" />
+		<bind to="dateOfBirth" column="dateOfBirth" adapter="LocalDate" />
+		<bind to="department" column="depName" search="self.name = :depName" />
+
+		<bind to="address" search="self.area = :area">
+			<bind to="street" column="street" />
+			<bind to="area" column="area" />
+			<bind to="city" column="city" />
+			<bind to="zip" column="zip" />
+			<bind to="state" column="state" />
+			<bind to="country" search="self.name=:countryName" update="false">
+				<bind to="name" column="countryName" />
+				<bind to="code" eval='"${countryName}".substring(0,2).toUpperCase()' />
+			</bind>
+		</bind>
+		<bind to="phones" if="!phoneType_Home.empty">
+			<bind to="phoneType" eval='"Home"' />
+			<bind to="phone" column="phoneType_Home" />
+		</bind>
+		<bind to="phones" if="!phoneType_Office.empty">
+			<bind to="phoneType" eval='"Office"' />
+			<bind to="phone" column="phoneType_Office" />
+		</bind>
+		<bind to="phones" if="!phoneType_Others.empty">
+			<bind to="phoneType" eval='"Others"' />
+			<bind to="phone" column="phoneType_Others" />
+		</bind>
+		<bind to="subjects" column="subjects" search="self.subjectName in :subjects"
+			eval="subjects.split('\\|') as List">
+		</bind>
+
+	</input>
+</csv-inputs>
+
+<!-- <bind to="phones" search="self.phone=:phone"> -->
+<!-- <bind to="phoneType" column="phoneType" /> -->
+<!-- <bind to="phone" column="phone" /> -->
+<!-- </bind> -->
+
+

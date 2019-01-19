@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_5.0.xsd">
+
+	<module name="student" package="com.axelor.student.db" />
+
+	<entity name="Phone" cachable="true">
+		<many-to-one name="student" ref="Student" required="true" />
+		<string name="phone" initParam="true" />
+		<string name="phoneType"  selection="phone.type.selection" initParam="true" />
+
+		<finder-method name="findByPhone" using="phone" />
+		<finder-method name="findByPhoneType" using="phoneType" />
+	</entity>
+</domain-models>

@@ -1,0 +1,4 @@
+name,notes,state,priority,createDate,startDate,endDate,deadlineDate,progress
+1-to-do,to-do-notes,To-do,2,2018-08-27 00:00:00,2018-08-27 02:00,2018-08-28 02:00,2018-08-28,0
+2-in-progress,in-progress-notes,In progress,1,2018-08-27 00:00:00,2018-08-27 02:00,2018-08-28 02:00,2018-08-28,25
+3-completed,completed-notes,Completed,2,2018-08-27 00:00:00,2018-08-27 02:00,2018-08-28 02:00,2018-08-28,100

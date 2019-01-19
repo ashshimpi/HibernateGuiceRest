@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.0.xsd">
+
+	<selection name="phone.type.selection">
+		<option value="Office">Office</option>
+		<option value="Home">Home</option>
+		<option value="Others">Others</option>
+	</selection>
+
+	<grid name="student-grid" title="Students (Grid)" model="com.axelor.student.db.Student">
+		<toolbar>
+			<button name="btn-import" title="Import"
+				onClick="com.axelor.student.web.StudentController:CSVImport" />
+			<!-- <button name="btn-multi-report" title="Multi-Report" -->
+			<!-- onClick="com.axelor.student.web.StudentController:report" /> -->
+		</toolbar>
+		<field name="rollNo" />
+		<field name="name" />
+		<field name="dateOfBirth" />
+		<field name="phones" />
+		<field name="subjects" />
+		<field name="department" />
+		<field name="address.country.name" title="Country" />
+	</grid>
+
+
+
+	<form name="student-form" title="title-student-form" model="com.axelor.student.db.Student"
+		onNew="action-group" onSave="action-name-validate,check-condition,act.validate"
+		css="panel-blue">
+		<panel title="Add Student-Details" css="panel-red">
+			<panel colSpan="4">
+				<field name="image" showTitle="false" colSpan="12" />
+			</panel>
+			<panel colSpan="8">
+				<field colSpan="8" name="name" title="Name" />
+				<field colSpan="4" name="dateOfBirth" title="D.O.B" />
+				<field colSpan="4" name="rollNo" title="Roll No" />
+			</panel>
+			<panel colSpan="12">
+				<field name="phones">
+					<editor layout="table" x-show-titles="false">
+						<field name="phoneType" width="100px" selection="phone.type.selection" />
+						<field name="phone" css="border-left-none" />
+					</editor>
+				</field>
+
+				<field name="subjects" title="Add Subject">
+					<editor layout="table" x-show-titles="false">
+						<field name="code" title="Subject-Code"></field>
+						<field name="subjectName" title="Subject-Name"></field>
+					</editor>
+				</field>
+			</panel>
+			<panel colSpan="12" css="panel-red">
+				<field name="address" title="Address" colSpan="12">
+					<editor x-show-titles="true">
+						<field name="street" />
+						<field name="area" />
+						<field name="city" />
+						<field name="zip" />
+						<field name="country" />
+					</editor>
+				</field>
+			</panel>
+			<panel colSpan="12">
+				<field name="department" />
+			</panel>
+		</panel>
+		<panel colSpan="12" css="panel-red">
+			<button colSpan="4" name="save-data" title="UPDATE"
+				onClick="com.axelor.student.web.StudentController:update" />
+			<button colSpan="4" name="btn-export-data" title="Export-Data"
+				onClick="export-data" />
+			<button colSpan="4" name="btn-report" title="Report(PDF)"
+				onClick="action-report" />
+		</panel>
+	</form>
+
+
+	<tree name="student-tree" title="Student (Tree)">
+
+		<!-- define tree columns -->
+		<column name="name" type="string" />
+		<column name="dateOfBirth" type="date" />
+
+		<!-- define 1st level node -->
+		<node model="com.axelor.student.db.Student">
+			<field name="name" as="name" />
+		</node>
+
+		<!-- define 2nd level node -->
+		<node model="com.axelor.student.db.Student">
+			<field name="name" as="title" />
+			<field name="dateOfBirth" as="dateOfBirth" />
+		</node>
+
+	</tree>
+	<kanban name="student-kanban" title="Student-Kanban-View"
+		model="com.axelor.student.db.Student" columnBy="name" sequenceBy="dateOfBirth"
+		limit="10">
+		<field name="name" />
+		<field name="dateOfBirth" />
+		<template><![CDATA[
+  <h4>{{name}}</h4>
+  ]]></template>
+	</kanban>
+
+	<cards name="student-card" title="Students" model="com.axelor.student.db.Student">
+		<field name="name" />
+		<field name="rollNo" />
+		<field name="hasImage" />
+		<field name="dateOfBirth" />
+		<field name="address" />
+		<field name="phones" />
+		<field name="department" />
+		<template><![CDATA[
+		<div class="span4 card-image">
+        <img ng-if="hasImage" ng-src="{{$image(null, 'image')}}">
+        <img ng-if="!hasImage" src="img/user.png">
+        <strong>{{name}}</strong>
+      </div>
+    <div>
+  	D.O.B : {{dateOfBirth}}
+  	RollNo : {{rollNo}}
+    <div>
+    	<address>
+   	 		Address: {{address.street}}, {{address.area}}, {{address.city}}, {{address.country.name}}
+    	</address>
+    	<phones>
+    	Phones : {{phones.phone}}({{phones.phoneType}})
+    	</phones>
+    </div>
+    <div>Department : {{department.name}}</div>
+    </div>
+    
+    ]]></template>
+	</cards>
+
+
+	<action-method name="act.say">
+		<call class="com.axelor.student.web.StudentController" method="say" />
+	</action-method>
+
+	<action-method name="act.validate">
+		<call class="com.axelor.student.web.StudentController" method="validate" />
+	</action-method>
+
+	<action-group name="action-group">
+		<action name="student-record" />
+	</action-group>
+
+	<action-condition name="check-condition">
+		<check field="name"
+			error="Name required and it should be of atleast 5 characters !" />
+	</action-condition>
+
+	<action-validate name="action-name-validate">
+		<alert message="Name Should be more than 5 chararacters !" if="name.length() &lt; 5" />
+	</action-validate>
+
+	<action-record name="student-record" model="com.axelor.student.db.Student">
+		<field name="name" expr="John Smith" />
+		<field name="phones" expr="action:phones" />
+		<field name="subjects" expr="action:subject" />
+		<field name="address" expr="action:address" />
+	</action-record>
+
+	<action-record name="phones" model="com.axelor.student.db.Phone">
+		<field name="phone" expr="+330183610313" />
+		<field name="phoneType" expr="Mobile" />
+	</action-record>
+
+	<action-record name="subject" model="com.axelor.student.db.Subject">
+		<field name="code" expr="AI" />
+		<field name="subjectName" expr="Artificial Intelligence" />
+	</action-record>
+
+	<action-record name="address" model="com.axelor.student.db.Address">
+		<field name="street" expr="Lake-view garden" />
+		<field name="area" expr="Piplod" />
+		<field name="city" expr="Surat" />
+		<field name="zip" expr="395007" />
+	</action-record>
+	<action-export name="export-data" download="true">
+		<export name="student.xml"
+			template="/home/axelor/jigar/my-axelor-demo/modules/my-axelor-demo-student/src/main/resources/data-export/export-student.st"
+			engine="ST" />
+	</action-export>
+
+	<action-report name="action-report" design="new_report.rptdesign"
+		output="report_${date}_${time}" format="pdf">
+		<param name="id" expr="eval: __self__?.id" />
+		<param name="Locale" expr="eval:__user__?.language" />
+	</action-report>
+	<action-report name="action-multi-report" design="multi_report.rptdesign"
+		output="report_${date}_${time}" format="pdf">
+		<param name="_ids" expr="eval: __self__?._ids.join(',')" />
+	</action-report>
+</object-views>

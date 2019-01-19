@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<xml-inputs xmlns="http://axelor.com/xml/ns/data-import"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://axelor.com/xml/ns/data-import
+  http://axelor.com/xml/ns/data-import/data-import_4.0.xsd">
+
+	<adapter name="LocalDate" type="com.axelor.data.adapter.JavaTimeAdapter">
+		<option name="type" value="LocalDate" />
+		<option name="format" value="dd/MM/yyyy" />
+	</adapter>
+
+	<input file="student.xml" root="student-book">
+		<bind node="student" type="com.axelor.student.db.Student">
+			<bind node="@name" to="name" />
+			<bind node="@dateOfBirth" to="dateOfBirth" adapter="LocalDate"/>
+			<bind node="@rollNo" to="rollNo"/>
+			<bind node="Phones/phone" to="phones">
+				<bind node="text()" to="phone" />
+				<bind node="@type" to="phoneType" />
+			</bind>
+			<bind node="subjects/subject" to="subjects" search="self.code = :code">
+				<bind node="@code" to="code" />
+				<bind node="text()" to="subjectName" />
+			</bind>
+			<bind node="address" to="address" search="self.area=:area"
+				update="false">
+				<bind node="@street" to="street" />
+				<bind node="@area" to="area" />
+				<bind node="@city" to="city" />
+				<bind node="@zip" to="zip" />
+				<bind node="@state" to="state" />
+				<bind node="country" to="country" search="self.name=:name"
+					update="false">
+					<bind node="text()" to="name" />
+				</bind>
+			</bind>
+			<bind node="department" to="department" search="self.code=:code"
+				update="false">
+				<bind node="@code" to="code" />
+				<bind node="text()" to="name" />
+			</bind>
+		</bind>
+	</input>
+</xml-inputs>
+
+
+
+<!-- <input file="country.xml" root="countries"> -->
+<!-- <bind node="country" type="com.axelor.student.db.Country" search="self.code=:code" -->
+<!-- update="false"> -->
+<!-- <bind node="@code" to="code" /> -->
+<!-- <bind node="text()" to="name" /> -->
+<!-- </bind> -->
+<!-- </input> -->

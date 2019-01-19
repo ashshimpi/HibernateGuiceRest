@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.0.xsd">
+
+	<grid name="subjects-grid" title="title-subjects-grid" model="com.axelor.student.db.Subject">
+		<field name="code" />
+		<field name="subjectName" />
+
+	</grid>
+
+	<form name="subjects-form" title="title-subjects-form" cols="2" model="com.axelor.student.db.Subject">
+		<panel title="subjects-form">
+			<field name="code" />
+			<field name="subjectName" />
+		</panel>
+	</form>
+
+</object-views>

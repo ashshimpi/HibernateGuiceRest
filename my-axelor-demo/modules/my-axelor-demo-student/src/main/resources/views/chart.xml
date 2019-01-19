@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.0.xsd">
+
+	<chart name="chart.student.per.department" title="Studuent per Department"
+		stacked="true">
+		<dataset type="jpql"> 
+  <![CDATA[
+  SELECT
+	  COUNT(s.department) AS dept,
+	  s.department.name AS dept_name
+  FROM
+  	Student s
+  GROUP BY 
+  	s.department,s.department.name
+  ]]>
+	</dataset>
+		<category key="dept_name" title="Departments" />
+		<series key="dept" type="bar" title="students" groupBy="dept" />
+	</chart>
+
+	<chart name="chart.student.per.subject.pie" title="Students per Subject">
+		<dataset type="sql"> 
+  <![CDATA[
+  SELECT
+  	 COUNT(sss.subjects) AS count_stud, 
+  	 ss.subject_name AS sub 
+  FROM 
+  	student_student_subjects sss,
+  	student_subject ss 
+  WHERE 
+  	sss.subjects=ss.id 
+  GROUP BY
+  	sss.subjects,
+  	ss.subject_name 
+  ]]>
+	</dataset>
+		<category key="sub" title="subject-name" />
+		<series key="count_stud" type="pie" title="students" />
+
+
+	</chart>
+	<chart name="chart.student.per.subject.per.dept" title="Students per Subject"
+		onInit="action-record">
+		<search-fields>
+			<field type="string" name="name" title="Department Name" />
+		</search-fields>
+		<dataset type="sql"> 
+  <![CDATA[
+SELECT 
+	count(st.name) AS stud_count, 
+	ss.subject_name  AS sub_name
+FROM 
+	student_student st, 
+	student_department sd, 
+	student_subject ss,
+	student_student_subjects sss 
+WHERE 
+	ss.id=sss.subjects and  
+	sss.student_student=st.id and 
+	st.department=sd.id  and 
+	sd.name=:name
+GROUP BY 
+	ss.subject_name
+  ]]>
+	</dataset>
+		<category key="sub_name" title="subject-name" />
+		<series key="stud_count" type="bar" title="students" />
+	</chart>
+
+	<action-record name="action-record" model="com.axelor.student.db.Department">
+		<field name="name" expr="Computer-Science" />
+	</action-record>
+
+	<chart name="chart.student.per.country.per.dept" title="Search Student-Country-Wise" onInit="action-record">
+		<search-fields>
+			<field type="string" name="name" title="Department Name" />
+		</search-fields>
+		<dataset type="sql"> 
+  <![CDATA[
+	SELECT 
+		COUNT(st.name) AS stud_count, 
+		sc.name AS country 
+	FROM 
+		student_student st, 
+		student_country sc,
+		student_address sa,
+		student_department sd 
+	WHERE 
+		sd.name=:name AND 
+		sd.id=st.department AND 
+		sc.id=sa.country AND 
+		st.address=sa.id 
+	GROUP BY 
+		sc.name;
+]]> 
+	</dataset>
+		<category key="country" title="country" />
+		<series key="stud_count" type="bar" title="students" />
+	</chart>
+
+
+	<!-- dashboard box with custom template -->
+
+	<custom name="student-custom" title="Students" css="report-box">
+		<dataset type="jpql">
+  <![CDATA[
+  select COUNT(s) as total from Student s
+  ]]>
+  </dataset>
+		<template>
+  <![CDATA[
+  <div class="report-data">
+    <h1>{{first.total}}</h1>
+    <small>Total Students</small>
+    <div class="report-tags"><span class="label label-important">Till Today</span></div>
+  </div>
+  ]]>
+  </template>
+
+
+
+	</custom>
+	<custom name="assignment-custom" title="Assignments" css="report-box">
+		<dataset type="jpql">
+  <![CDATA[
+  select COUNT(A) as total from Assignment A
+  ]]>
+  </dataset>
+		<template>
+  <![CDATA[
+  <div class="report-data">
+    <h1>{{first.total}}</h1>
+    <small>Total Assignments</small>
+    <div class="report-tags"><span class="label label-important">Till Today</span></div>
+  </div>
+  ]]>
+  </template>
+	</custom>
+
+	<custom name="my-custom" title="Departments" css="report-box">
+		<dataset type="jpql">
+  <![CDATA[
+  select COUNT(D) as total from Department D
+  ]]>
+  </dataset>
+		<template>
+  <![CDATA[
+  <div class="report-data">
+    <h1>{{first.total}}</h1>
+    <small>Total Departments</small>
+    <div class="report-tags"><span class="label label-important">Till Today</span></div>
+  </div>
+  ]]>
+  </template>
+	</custom>
+
+</object-views>

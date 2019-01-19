@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.0.xsd">
+
+
+	<menuitem name="menu-dashboards" order="-101" title="Dashboards"
+		icon="fa-dashboard" icon-background="blue" />
+
+	<menuitem name="menu-welcome" parent="menu-dashboards" title="Welcome!"
+		action="welcome" />
+	<action-view name="welcome" title="Welcome!"
+		model="com.axelor.student.db.Student">
+		<view type="dashboard" name="welcome.dashboard" />
+	</action-view>
+	<dashboard name="welcome.dashboard" title="Welcome!">
+		<dashlet action="custom:assignment-custom" colSpan="4"/>
+		<dashlet action="custom:student-custom" colSpan="4"/>
+		<dashlet action="custom:my-custom" colSpan="4"/>
+		<dashlet action="chart:chart.student.per.department" colSpan="6"/>
+		<dashlet action="chart:chart.student.per.subject.pie" colSpan="6"/>
+		<dashlet action="chart:chart.student.per.subject.per.dept" colSpan="6"/>
+		<dashlet action="chart:chart.student.per.country.per.dept" colSpan="6"/>
+		<dashlet action="grid:student-grid" colSpan="12"/>
+		<dashlet action="grid:assignment-grid" colSpan="12"/>
+	</dashboard>
+
+	<menuitem name="menu-assignment" order="-80" title="Assignments"
+		icon="fa-tasks" icon-background="violet" />
+	<menuitem name="menu-assignment-grid" parent="menu-assignment"
+		title="Assignments(Grid/Form)" action="assignment" />
+	<action-view name="assignment" title="Assignments"
+		model="com.axelor.student.db.Assignment">
+		<view type="grid" name="assignment-grid" />
+		<view type="form" name="assignment-form" />
+		<view type="calendar" name="assignment-calendar"/>
+	</action-view>
+
+	<menuitem name="menu-assignment-kanban" parent="menu-assignment"
+		title="Assignments(kanban)" action="assignment-kanban" />
+
+	<action-view name="assignment-kanban" title="Assignments(kanban)"
+		model="com.axelor.student.db.Assignment">
+		<view type="kanban" name="assignment-kanban" />
+		<view type="tree" name="assignment-tree" />
+	</action-view>
+
+
+	<menuitem name="menu-assignment-tree" parent="menu-assignment"
+		title="Assignments(tree)" action="act.assignment-tree" />
+
+	<action-view name="act.assignment-tree" title="Assignments(tree)"
+		model="com.axelor.student.db.Assignment">
+		<view type="tree" name="assignment-tree" />
+	</action-view>
+
+
+
+
+	<!-- <domain>self.user = :currentUser</domain> -->
+	<!-- <context name="currentUser" expr="eval: __user__" /> -->
+	<menuitem name="menu-student" order="-100" title="Student Book"
+		icon="fa-book" icon-background="green" />
+
+	<menuitem name="menu-AllStudents-grid" title="All Students(grid)"
+		parent="menu-student" action="student.all" />
+	<action-view name="student.all" title="Students"
+		model="com.axelor.student.db.Student">
+		<view type="grid" name="student-grid" />
+		<view type="form" name="student-form" />
+	</action-view>
+
+	<menuitem name="menu-AllStudents-card" title="All Students(card)"
+		parent="menu-student" action="student.all.card" />
+	<action-view name="student.all.card" title="Students(card)"
+		model="com.axelor.student.db.Student">
+		<view type="cards" name="student-card" />
+		<view type="form" name="student-form" />
+		<context name="json-enhance" expr="true" />
+	</action-view>
+
+
+	<menuitem name="menu-AllStudents-kanban" title="All Students(Kanban)"
+		parent="menu-student" action="student.all.kanban" />
+	<action-view name="student.all.kanban" title="Students(Kanban)"
+		model="com.axelor.student.db.Student">
+		<view type="kanban" name="student-kanban" />
+		<view type="form" name="student-form" />
+	</action-view>
+
+	<menuitem name="menu-add-department" parent="menu-student"
+		title="Add/View-Departments" action="add-department" />
+	<action-view name="add-department" title="Add/View Department"
+		model="com.axelor.student.db.Department">
+		<view type="grid" name="department-grid" />
+		<view type="form" name="department-form" />
+	</action-view>
+
+	<menuitem name="menu-add-country" parent="menu-student" title="Add/View-Countries"
+		action="add-country" />
+	<action-view name="add-country" title="Add/View-Countries"
+		model="com.axelor.student.db.Country">
+		<view type="grid" name="country-grid" />
+		<view type="form" name="country-form" />
+	</action-view>
+
+	<menuitem name="menu-student-by-department" parent="menu-student"
+		title="Student by Departments" />
+	<menuitem name="dept.Chemical" parent="menu-student-by-department"
+		title="Chemical" action="act.dept.chemical" />
+
+	<action-view name="act.dept.chemical" title="Chemical"
+		model="com.axelor.student.db.Student">
+		<view type="form" name="student-form" />
+		<view type="grid" name="student-grid" />
+		<domain>self.department[].name = :dept_name</domain>
+		<context name="dept_name" expr="Chemical" />
+	</action-view>
+
+	<menuitem name="dept.Computer-Science" parent="menu-student-by-department"
+		title="Computer-Science" action="act.dept.computer-science" />
+	<action-view name="act.dept.computer-science" title="Computer-Science"
+		model="com.axelor.student.db.Student">
+		<view type="form" name="student-form" />
+		<view type="grid" name="student-grid" />
+		<domain>self.department[].name = :dept_name</domain>
+		<context name="dept_name" expr="Computer-Science" />
+	</action-view>
+</object-views>

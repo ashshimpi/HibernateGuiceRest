@@ -1,0 +1,23 @@
+
+apply plugin: 'java-library'
+
+
+repositories {
+   mavenCentral()
+    maven {
+        url 'http://download.eclipse.org/rt/eclipselink/maven.repo'
+    }
+    jcenter()
+}
+
+dependencies {
+  	compile group: 'org.hibernate', name: 'hibernate-core', version: '5.4.0.Final'
+  	api 'org.apache.commons:commons-math3:3.6.1'
+  	
+
+    implementation 'postgresql:postgresql:9.1-901-1.jdbc4'
+     implementation 'com.google.guava:guava:23.0'
+   
+    testImplementation 'junit:junit:4.12'
+}
+
