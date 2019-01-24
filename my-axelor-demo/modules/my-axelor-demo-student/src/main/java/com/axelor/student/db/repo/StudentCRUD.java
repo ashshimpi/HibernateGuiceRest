@@ -4,7 +4,7 @@ import java.util.Map;
 import com.axelor.student.db.Student;
 import com.google.inject.Inject;
 
-public class StudentCRUD extends StudentRepository {
+public class gradle extends StudentRepository {
 
   @Inject
   AddressRepository addressRep;

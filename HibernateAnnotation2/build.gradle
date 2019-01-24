@@ -1,0 +1,20 @@
+
+apply plugin: 'java-library'
+
+
+repositories {
+ 
+    jcenter()
+}
+
+dependencies {
+   
+
+    
+    compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.4.0.Final'
+    implementation  'postgresql:postgresql:9.1-901-1.jdbc4'
+   
+    
+    testImplementation 'junit:junit:4.12'
+}
+
