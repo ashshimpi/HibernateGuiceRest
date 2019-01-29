@@ -35,7 +35,7 @@ public class InterestData {
 	private void read() {
 	
 		try {
-			Interest simple=entitymanager.find(Interest.class, 2);
+			Interest simple=entitymanager.find(Interest.class, 1);
 
 			System.out.println("total salary "+simple.getSI());
 			
@@ -52,9 +52,9 @@ public class InterestData {
 		
 		
 		Interest i=new Interest();
-		i.setPrinciple(5000);
-		i.setRate(4.5);
-		i.setYear(2);
+		i.setPrinciple(3000);
+		i.setRate(6);
+		i.setYear(1);
 		entitymanager.persist( i );
 		entitymanager.getTransaction( ).commit( );
 		

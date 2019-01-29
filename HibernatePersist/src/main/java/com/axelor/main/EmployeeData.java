@@ -11,27 +11,21 @@ import com.axelor.company.Employee;
 
 public class EmployeeData {
 
-
 	   public static final   EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "Persist" );
 	      
 	    public static final  EntityManager entitymanager = emfactory.createEntityManager( );
-	    		
-	
+	    	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
 			Scanner sc=new Scanner(System.in);
 			 char choice1;
-			
-			
-			
-			
-			
+					
 			entitymanager.getTransaction( ).begin( );
 	    		
-	    		EmployeeData e=new EmployeeData();
+	    	EmployeeData e=new EmployeeData();
 	    		
-				do {
+			do {
 					
 	    			System.out.println("Enter the choice");
 	    			int choice=sc.nextInt();
@@ -53,28 +47,17 @@ public class EmployeeData {
 						default : System.out.println("Enter valid choice");
 								break;
 							
-						
 						}
-			    		System.out.println("do you want to continue y or N");
-
-			    		choice1=sc.next().charAt(0);
-			    		
-	    		
+			    	System.out.println("do you want to continue y or N");
+			    	choice1=sc.next().charAt(0);
+			    	    		
 				}while(choice1 == 'Y' || choice1=='y');
-	    		
-	    		
-	    		
-	    		
-				
+	    			   
 	    			//e.add();
 	    		//e.update();
 	    		//e.read();
 	    		//e.delete();
-	      
-	      
-	      
-	      
-	      
+	      	
 	      entitymanager.close( );
 	      emfactory.close( );
 	}
@@ -105,15 +88,10 @@ public class EmployeeData {
 		// TODO Auto-generated method stub
 		 //data update
 	      Employee employee = entitymanager.find( Employee.class, 4 );
-	      
-	      
 	      System.out.println( employee );
 	      employee.setSalary( 2000 );
-	      entitymanager.getTransaction( ).commit( );
-	      
-	      
-	      
-	}
+	      entitymanager.getTransaction( ).commit( );	    
+	      }
 
 	private void add() {
 		// TODO Auto-generated method stub
@@ -122,10 +100,8 @@ public class EmployeeData {
 	      employee.setEname( "niki" );
 	      employee.setSalary( 500 );
 	      employee.setDeg( "Engineear" );
-	      
 	      entitymanager.persist( employee );
 	      entitymanager.getTransaction( ).commit( );
-		
-	}
+		}
 
 }

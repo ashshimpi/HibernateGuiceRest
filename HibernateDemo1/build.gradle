@@ -1,0 +1,23 @@
+apply plugin: 'war' 
+apply plugin: 'eclipse'
+apply plugin: 'java'
+apply plugin: 'application'
+
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+  
+   compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.4.0.Final'
+   compile group: 'org.hibernate', name: 'hibernate-core', version: '5.4.0.Final'
+	compile 'org.hibernate:hibernate-validator:5.3.4.Final'
+	compile group: 'org.postgresql', name: 'postgresql', version: '42.2.5'
+   compile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
+    
+    // Use JUnit test framework
+    testImplementation 'junit:junit:4.12'
+}
+
